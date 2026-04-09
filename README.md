@@ -101,4 +101,4 @@ flowchart LR
 
 ## 本分支维护说明
 
-场景相关的脚本、模板、示例提示词或配置文件可放在本分支子目录（例如 `examples/`、`prompts/`），**不要**在 `main` 上堆积此类内容；导航表仅在 `main` 的 README 中维护。
+场景相关的脚本、模板、示例提示词或配置文件可放在本分支子目录（例如 `examples/`、`prompts/`），**不要**在 `main` 上堆积此类内容；导航表仅在 `main` 的 README 中维护。新建场景、分支命名与 Agent 协作约定见 [AGENTS.md](AGENTS.md)。
