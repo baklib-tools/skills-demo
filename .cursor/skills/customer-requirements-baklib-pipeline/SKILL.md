@@ -1,17 +1,57 @@
 ---
 name: customer-requirements-baklib-pipeline
-description: >-
-  skills-demo 场景「客户需求 → Baklib 高价值库与方案库」专用。用户在本仓库该场景分支中
-  处理批量客户需求、AI 整理筛选、高价值入库、需求方案撰写或 Baklib 发布时使用；
-  通用 Baklib 操作优先遵循已安装的 baklib-mcp / baklib-intake-assistant。
+description: 本仓库维护：客户需求经 Baklib 知识库落地的流水线约定。含 MCP 列知识库、启发式提示并请用户确认「零散需求库 / 高价值需求库」、缺失时建议后台手动建库（MCP 不可建库）。勿修改上游/外部安装的 baklib-mcp、baklib-intake-assistant；与本场景相关的可复用约定与记忆字段说明以本技能（及同目录扩展文档）为准。在用户处理客户需求录入、分流、同步到 Baklib 时使用。
 ---
 
-# 场景技能：客户需求 → Baklib 流水线
+# 客户需求 → Baklib 知识库流水线（本仓库技能）
 
-本目录对应分支 **`scenario/customer-requirements-baklib-pipeline`**，由 [AGENTS.md](../../../AGENTS.md) 要求在新场景创建时初始化。
+## 与外部技能的关系（重要）
 
-- **场景说明与流程**：仓库根目录 [README.md](../../../README.md)
-- **构建手记**：[HOW-TO-BUILD-THIS-SCENARIO.md](../../../HOW-TO-BUILD-THIS-SCENARIO.md)
-- **上游通用技能**：`.cursor/skills/baklib-mcp`、`baklib-intake-assistant`
+- **`baklib-mcp`、`baklib-intake-assistant` 等若为上游或包安装副本，本仓库一律不修改其内容。** 需要调整通用 MCP 用法时，应到对应上游仓库或用户全局技能目录处理。
+- **凡本演示/项目里「要记住」的流程**（例如哪类需求进哪个知识库、如何确认、无库怎么办），**只维护在本技能** `customer-requirements-baklib-pipeline`（以及你愿意追加的同目录 `reference.md` 等），避免写进外部技能副本以免升级覆盖或违背安装约定。
+- 实际操作 Baklib 时：**鉴权、优先 MCP、`list/get` 再写入、禁止臆测清单**等，仍须遵循外部技能 [baklib-mcp](../baklib-mcp/SKILL.md)。**任意写入前**向用户确认工具与关键参数；若同时使用录入助手，还须遵守其写入确认与路由文档。
 
-后续可在本目录增加 `scripts/`、`references/` 等，并更新本文件 `description` 与正文。
+## 何时启用本技能
+
+用户或任务涉及：**客户需求收集、零散需求与高价值需求分流、intake、把需求同步/录入 Baklib 知识库**等，需要先搞清楚「进哪个空间（`space_id`）」时，**先读本技能再动 MCP**。
+
+## 知识库列表与角色确认（必须走 MCP + 必须用户确认）
+
+1. **拉取列表**  
+   - 若本轮尚未列出过最新知识库，或用户要求刷新：调用 MCP **`kb_list_knowledge_bases`**。  
+   - 注意分页，直到覆盖 `meta.total_count`（勿凭印象漏库）。
+
+2. **展示给用户**  
+   - 每条至少包含：**`id`（即写入文章时的 `space_id`）**、`name`、`description`（若有）、`articles_count`。
+
+3. **智能提示，禁止代用户拍板**  
+   - 可据 `name` / `description` 给**启发式候选**（示例：含「收集」「零散」「反馈」「草稿」等 → 可能适合**零散需求**；含「方案」「高价值」「立项」「商机」等 → 可能适合**高价值需求**）。团队命名差异大，**只能作提示**。  
+   - **必须用明确问句**请用户确认：  
+     1. 哪一个知识库（`id` + 名称）存放**零散需求**？  
+     2. 哪一个存放**高价值需求**？  
+   - 若用户约定「同一知识库内用父文章/栏目区分」：复述约定，确认 **`space_id`**；可用 MCP `kb_list_articles` 等核对结构，**勿臆测**树形关系。
+
+4. **没有合适知识库时**  
+   - 建议用户在 **Baklib 管理后台手动新建知识库**（或改名/补描述以便区分），再在对话里重新 `kb_list_knowledge_bases`。  
+   - **须说明**：当前 **Baklib MCP 不提供创建知识库**，无法在对话内代为建库。
+
+## 本仓库可选「记忆」文件（减少重复确认）
+
+在**项目根目录**（勿提交敏感信息）可自建：
+
+- **路径**：`.config/customer-requirements-baklib-pipeline.yaml`（建议加入 `.gitignore` 若含环境相关偏好）
+
+**示例字段**（可按团队改名，代理以「存在则先读」为准）：
+
+```yaml
+# 用户确认后由人维护；Agent 仅读取，不擅自写入密钥
+adhoc_requirements_space_id: "<零散需求知识库 space_id>"
+high_value_requirements_space_id: "<高价值需求知识库 space_id>"
+```
+
+- 即使存在该文件：**仍应在首次或用户质疑时**用 MCP 刷新列表并**简短复述**当前选用，避免后台已删改库而本地过期。  
+- 若你希望与 **baklib-intake-assistant** 的记忆文件合并，以团队单一事实来源为准；**本流水线专属字段**优先记录在上述 `customer-requirements-baklib-pipeline.yaml`，避免去改外部技能里的示例路径。
+
+## 版本记录（本文件）
+
+- **2026-04-09**：初版；从误写入外部技能的「需求类知识库」流程迁回，并固定「只在本技能维护项目约定」。
