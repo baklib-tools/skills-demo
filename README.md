@@ -33,6 +33,6 @@ scenario/<slug>
 
 | 分支名 | 场景说明 | 文档入口 |
 | --- | --- | --- |
-| （暂无） | 待补充 | — |
+| `scenario/customer-requirements-baklib-pipeline` | 大量客户需求 → AI 整理与筛选 → 高价值需求入库 Baklib → 逐条分析生成设计方案 → 方案库与可选官网发布 | 检出该分支后阅读根目录 `README.md` |
 
 有场景后，在本表追加一行即可；场景详情以各分支内文档为准。
