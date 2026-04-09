@@ -47,5 +47,7 @@ scenario/<slug>
 2. **更新导航**：切换到 **`main`**，在下方「场景分支」表中**新增一行**（分支名、场景说明、文档入口可写「检出该分支后阅读根目录 `README.md`」）。
 3. **提交**：**仅提交**本次导航相关变更（通常只有 `README.md`），提交说明可用简体中文（例如「文档：新增场景 xxx 导航」）。
 4. **创建场景分支**：在已包含该提交的 **`main`** 上执行 `git checkout -b <已确认的分支名>`。之后该场景的 README、示例与脚本**只在此分支**演进，避免堆在 `main`。
+5. **初始化场景技能目录（必须）**：在本分支创建 `.cursor/skills/<slug>/SKILL.md`（`<slug>` 为分支名中 `scenario/` 之后的段），含合法 frontmatter 与占位说明；不得只建分支不建该目录。详见 [AGENTS.md](AGENTS.md)。
+6. **初始化构建手记（建议）**：在同分支根目录添加 `HOW-TO-BUILD-THIS-SCENARIO.md` 占位并逐步补充。
 
 更细的规则与例外以 [AGENTS.md](AGENTS.md) 为准。
