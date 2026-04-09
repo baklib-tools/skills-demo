@@ -16,7 +16,13 @@
 git checkout <场景分支名>
 ```
 
-维护者与 Agent 协作约定见根目录 [AGENTS.md](AGENTS.md)（含「创建新场景」时的命名确认与 Git 流程）。
+## 场景分支
+
+| 分支名 | 场景说明 | 文档入口 |
+| --- | --- | --- |
+| `scenario/customer-requirements-baklib-pipeline` | 大量客户需求 → AI 整理与筛选 → 高价值需求入库 Baklib → 逐条分析生成设计方案 → 方案库与可选官网发布 | 检出该分支后阅读根目录 `README.md` |
+
+有场景后，在本表追加一行即可；场景详情以各分支内文档为准。
 
 ## 分支命名约定
 
@@ -43,15 +49,3 @@ scenario/<slug>
 4. **创建场景分支**：在已包含该提交的 **`main`** 上执行 `git checkout -b <已确认的分支名>`。之后该场景的 README、示例与脚本**只在此分支**演进，避免堆在 `main`。
 
 更细的规则与例外以 [AGENTS.md](AGENTS.md) 为准。
-
-### 人工自行操作
-
-与上列步骤相同：在 `main` 编辑本页「场景分支」表并提交，再 `git checkout -b scenario/<slug>`。执行前确认当前在 `main`、无与本次无关的未提交改动；多人协作时可在提交前先 `git pull` 更新 `main`。
-
-## 场景分支
-
-| 分支名 | 场景说明 | 文档入口 |
-| --- | --- | --- |
-| `scenario/customer-requirements-baklib-pipeline` | 大量客户需求 → AI 整理与筛选 → 高价值需求入库 Baklib → 逐条分析生成设计方案 → 方案库与可选官网发布 | 检出该分支后阅读根目录 `README.md` |
-
-有场景后，在本表追加一行即可；场景详情以各分支内文档为准。
