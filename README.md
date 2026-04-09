@@ -5,6 +5,33 @@
 - 上游能力安装：[baklib-tools/skills](https://github.com/baklib-tools/skills)  
 - 返回全仓库场景索引：检出 `main` 分支，阅读根目录 [README.md](https://github.com/baklib-tools/skills-demo/blob/main/README.md)。
 
+## 第一步：安装本场景依赖的 Cursor 技能
+
+本场景先接入 **baklib-mcp**（经 MCP 操作 Baklib 知识库 / 站点 / DAM 等）与 **baklib-intake-assistant**（配合 MCP 的本地镜像录入、SQLite 台账与脚本工具链）。安装方式与上游一致，见 [baklib-tools/skills 仓库 README](https://github.com/baklib-tools/skills#readme)。
+
+### 命令行安装（推荐）
+
+需已安装 [Node.js](https://nodejs.org/)，在**本仓库根目录**执行：
+
+```bash
+npx --yes ctx7 skills install /baklib-tools/skills baklib-mcp --cursor
+npx --yes ctx7 skills install /baklib-tools/skills baklib-intake-assistant --cursor
+```
+
+- 使用 **`--cursor`** 可直接安装到本项目的 `.cursor/skills/`，无需在交互菜单里勾选。
+- 若未加 `--cursor`，安装器会询问目标环境，请选择 **Cursor (.cursor/skills)**。
+
+### 若 `ctx7` 提示找不到 `baklib-intake-assistant`
+
+可改用上游文档中的 **手动拷贝**：从 [skills/baklib-intake-assistant](https://github.com/baklib-tools/skills/tree/main/skills/baklib-intake-assistant) 将整个目录复制到本仓库 `.cursor/skills/baklib-intake-assistant/`，保留 `SKILL.md`、`scripts/` 等结构。
+
+### 安装后
+
+- 按 **baklib-mcp** 内 `SKILL.md` 配置 MCP 服务与鉴权（版本与能力以前端 skill 说明为准）。  
+- 按 **baklib-intake-assistant** 内 `SKILL.md`、`local-mirror.md` 理解镜像根目录、`知识库/`、`资源库/`、`站点/` 与台账约定。
+
+本仓库已在 `.cursor/skills/` 中附带上述两技能的副本，便于演示环境开箱即用；仍建议对照上游仓库保持更新。
+
 ## 业务目标
 
 | 阶段 | 产出 | 存放位置（示例命名，可按组织实际调整） |
