@@ -32,6 +32,10 @@ npx --yes ctx7 skills install /baklib-tools/skills baklib-intake-assistant --cur
 
 本仓库已在 `.cursor/skills/` 中附带上述两技能的副本，便于演示环境开箱即用；仍建议对照上游仓库保持更新。
 
+### MCP 与 `${workspaceFolder}`（Agent 窗口注意）
+
+若在 `mcp.json` 里用 `"BAKLIB_MCP_WORKSPACE": "${workspaceFolder}"`：**Cursor Agent 窗口**与 **Editor 窗口**的工作区根可能不一致，变量未必指向本仓库根目录，项目内 `.config/BAKLIB_MCP_TOKEN` 可能读不到。建议将 `BAKLIB_MCP_WORKSPACE` 设为**本仓库绝对路径**，或使用 **`~/.config/BAKLIB_MCP_TOKEN`**。详见 [HOW-TO-BUILD-THIS-SCENARIO.md](HOW-TO-BUILD-THIS-SCENARIO.md) 中 **「Cursor Agent 窗口与 `${workspaceFolder}`」**。
+
 ## 业务目标
 
 | 阶段 | 产出 | 存放位置（示例命名，可按组织实际调整） |
