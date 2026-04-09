@@ -34,8 +34,15 @@
 4. **创建场景分支**  
    在包含上述提交的 **`main`** 上，创建并切换到新分支（分支名须与用户确认的一致）。后续该场景的实现、文档与资源**只在此分支**进行，勿在 `main` 上堆积场景专属内容。
 
-5. **初始化构建过程文档（建议）**  
-   创建场景分支后，可在该分支根目录新增 `HOW-TO-BUILD-THIS-SCENARIO.md`（可先写简短占位与首条决策），并在后续实现中按下方「场景构建过程文档」规则持续补充。
+5. **初始化场景技能目录（必须）**  
+   创建场景分支后，**须**在本分支建立**本场景专用的 Cursor 技能目录**，便于模型按 `description` 选用、并与 [baklib-tools/skills](https://github.com/baklib-tools/skills) 中安装的通用技能区分边界。  
+   - **路径**：`.cursor/skills/<slug>/`（`<slug>` 与分支名 `scenario/<slug>` 中的 **`<slug>` 段一致**，勿包含 `scenario/` 前缀）。  
+   - **最低限度内容**：该目录下**至少**包含 **`SKILL.md`**，且具备合法 frontmatter：`name`（建议与目录名或 `scenario-<slug>` 一致）、`description`（可先写占位，说明「本场景专用、待补充触发条件与能力」）。正文可简述场景目标并链接本分支根目录 [README.md](README.md)。  
+   - **禁止**：仅创建分支而不创建上述目录；将场景专属 `SKILL.md` 只写在 `main` 上。  
+   - **可选**：同目录下后续再增加 `scripts/`、`references/` 等，随场景演进提交。
+
+6. **初始化构建过程文档（建议）**  
+   在同一场景分支根目录新增 `HOW-TO-BUILD-THIS-SCENARIO.md`（可先写简短占位与首条决策），并在后续实现中按下方「场景构建过程文档」规则持续补充。
 
 ## 场景构建过程文档（HOW-TO-BUILD-THIS-SCENARIO.md）
 
